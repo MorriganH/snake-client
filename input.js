@@ -29,6 +29,15 @@ const handleUserInput = (key) => {
   if (key === 'd') {
     connection.write('Move: right');
   }
+  if (key === 'j') {
+    connection.write('Say: Hello');
+  }
+  if (key === 'k') {
+    connection.write('Say: Got it');
+  }
+  if (key === 'l') {
+    connection.write('Say: Fun!');
+  }
 };
 
 // listens for data coming in from stdin (on command line) and processes it through handleUserInput
