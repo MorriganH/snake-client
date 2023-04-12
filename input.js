@@ -1,43 +1,34 @@
 const { stdin } = require('process');
+const { KEY_MAPPING } = require('./constants');
 
+// stores conn object returned by connect function in client.js (line 10)
 let connection;
 
 // allows inputs to be taken from CLI
 const setupInput = (conn) => {
+  
+  // stores the conn object as a global variable so handleUserInput can access it (line 4)
   connection = conn;
+
+  // gets stdin processes and sets how it should behave
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding('utf8');
   stdin.resume();
+  
   return stdin;
 };
 
 // determines what to do with inputs
 const handleUserInput = (key) => {
+
+  // if CTRL + C disconnect from server
   if (key === '\u0003') {
     process.exit();
   }
-  if (key === 'w') {
-    connection.write('Move: up');
-  }
-  if (key === 'a') {
-    connection.write('Move: left');
-  }
-  if (key === 's') {
-    connection.write('Move: down');
-  }
-  if (key === 'd') {
-    connection.write('Move: right');
-  }
-  if (key === 'j') {
-    connection.write('Say: Hello');
-  }
-  if (key === 'k') {
-    connection.write('Say: Got it');
-  }
-  if (key === 'l') {
-    connection.write('Say: Fun!');
-  }
+
+  // sends appropriate value to server when each key is pressed
+  connection.write(KEY_MAPPING[key]);
 };
 
 // listens for data coming in from stdin (on command line) and processes it through handleUserInput
